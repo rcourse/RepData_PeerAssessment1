@@ -4,14 +4,14 @@
 
 ## Loading and preprocessing the data
 
-1. Loading data as *data* from corresponding dataset - *activity.csv* (missing values are coded as NA, which is default to read.csv function, so we don't need to handle it separately):
+Loading data as *data* from corresponding dataset - *activity.csv* (missing values are coded as NA, which is default to read.csv function, so we don't need to handle it separately):
 
 
 ```r
 data <- read.csv("activity.csv", stringsAsFactors = FALSE)
 ```
 
-2. Converting *date* column from character class to Date class (columns *steps* and *interval* should be integers):
+Converting *date* column from character class to Date class (columns *steps* and *interval* should be integers):
 
 
 ```r
@@ -20,14 +20,14 @@ data$date <- as.Date(data$date, format = "%Y-%m-%d")
 
 ## What is mean total number of steps taken per day?
 
-1. Calculation of the total number of steps taken per day:
+Calculation of the total number of steps taken per day:
 
 
 ```r
 day_agg <- aggregate(steps~date, data=data, sum)
 ```
 
-2. Histogram of the total number of steps taken each day:
+Histogram of the total number of steps taken each day:
 
 
 ```r
@@ -36,7 +36,7 @@ hist(day_agg$steps, xlab="Steps per day", main="Histogram of the total number of
 
 ![](figure/unnamed-chunk-4-1.png) 
 
-3. Calculation and reporting the mean and median of the total number of steps taken per day:
+Calculation and reporting the mean and median of the total number of steps taken per day:
 
 
 ```r
@@ -57,7 +57,7 @@ median(day_agg$steps)
 
 ## What is the average daily activity pattern?
 
-1. Time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis):
+Time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis):
 
 
 ```r
@@ -67,7 +67,7 @@ plot(int_avg$interval, int_avg$steps, type="l", xlab="5-minute interval", ylab="
 
 ![](figure/unnamed-chunk-6-1.png) 
 
-2. Calculation which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps:
+Calculation which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps:
 
 
 ```r
@@ -80,7 +80,7 @@ int_avg[int_avg$steps==max(int_avg$steps), "interval"]
 
 ## Imputing missing values
 
-1. Calculation of the total number of missing values in the dataset:
+Calculation of the total number of missing values in the dataset:
 
 
 ```r
@@ -91,9 +91,9 @@ sum(is.na(data$steps))
 ## [1] 2304
 ```
 
-2. We use the mean for that 5-minute interval as strategy for filling in all of the missing values in the dataset.
+We use the mean for that 5-minute interval as strategy for filling in all of the missing values in the dataset.
 
-3. Creation of new dataset *non_na_data* that is equal to the original dataset but with the missing data filled in according to chosen strategy:
+Creation of new dataset *non_na_data* that is equal to the original dataset but with the missing data filled in according to chosen strategy:
 
 
 ```r
@@ -106,7 +106,7 @@ for(i in 1:nrow(non_na_data)) {
 }
 ```
 
-4. Histogram of the total number of steps taken each day:
+Histogram of the total number of steps taken each day:
 
 
 ```r
@@ -147,7 +147,7 @@ Setting locale to English so english weekday names are used for plotting:
 Sys.setlocale("LC_TIME", "English")
 ```
 
-1. Adding a new variable *day* in the dataset *non_na_data* with two levels – *weekday* and *weekend* indicating whether a given date is a weekday or weekend day:
+Adding a new variable *day* in the dataset *non_na_data* with two levels – *weekday* and *weekend* indicating whether a given date is a weekday or weekend day:
 
 
 ```r
@@ -155,7 +155,7 @@ non_na_data$day <- ifelse(weekdays(non_na_data$date) == "Saturday" | weekdays(no
 non_na_data$day <- as.factor(non_na_data$day)
 ```
 
-2. Panel plot using *lattice* plotting system containing a time series plot of the 5-minute interval and the average number of steps taken, averaged across all weekday days or weekend days:
+Panel plot using *lattice* plotting system containing a time series plot of the 5-minute interval and the average number of steps taken, averaged across all weekday days or weekend days:
 
 
 ```r
